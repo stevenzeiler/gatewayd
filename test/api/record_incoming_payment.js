@@ -28,7 +28,7 @@ describe('gateway.api.recordIncomingPayment', function(){
 
     //send XRP to hot wallet
     rippleTestClient.sendAndConfirmPayment(options, function(error, response){
-      successfullPayment = {
+      payment = {
         destinationTag: '1',
         transaction_state: response.result,
         hash: response.hash,
@@ -42,30 +42,27 @@ describe('gateway.api.recordIncomingPayment', function(){
   });
 
   it('should record the incoming payment in the ripple_transactions database table', function(done){
-    gateway.api.recordIncomingPayment(successfullPayment, function(error, response){
-      assert.strictEqual(response.dataValues.to_amount, successfullPayment.amount);
+    gateway.api.recordIncomingPayment(payment, function(error, response){
+      dbResponse = response.dataValues;
+      assert.strictEqual(response.dataValues.to_amount, payment.amount);
       assert.strictEqual(response.dataValues.to_issuer, gateway.config.get('COLD_WALLET'));
-      assert.strictEqual(response.dataValues.to_currency, successfullPayment.currency);
-      assert.strictEqual(response.dataValues.transaction_hash, successfullPayment.hash);
+      assert.strictEqual(response.dataValues.to_currency, payment.currency);
+      assert.strictEqual(response.dataValues.transaction_hash, payment.hash);
       done();
     });
   });
 
   it('should prevent the recording of incoming payments with redundant transaction hashes', function(done){
-    var payment = {
-         destinationTag: '1',
-         transaction_state: 'tesSUCCESS',
-         hash: 'A5F9ADEADAD10CCF372F8D1752DA29ECC8DF61051D76220FBE4FA78242081C92',
-         amount: '1.22',
-         currency: 'SWD',
-         issuer: 'rMinhWxZz4jeHoJGyddtmwg6dWhyqQKtJz',
-         state: 'incoming'
-    };
-    
     gateway.api.recordIncomingPayment(payment, function(error, response){
       assert.strictEqual(error.severity, 'ERROR');
-      assert.strictEqual(error.detail, 'Key (transaction_hash)=(A5F9ADEADAD10CCF372F8D1752DA29ECC8DF61051D76220FBE4FA78242081C92) already exists.');
+      assert(error.detail.match(payment.hash));
+      assert.strictEqual(error.detail.match(payment.hash)[0], payment.hash);
       done();
     });
   });
+
+  after(function(done){
+    gateway.data.rippleTransactions.delete({ id: dbResponse.id }, done);
+  });
+
 });
