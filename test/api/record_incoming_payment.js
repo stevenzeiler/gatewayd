@@ -41,7 +41,7 @@ describe('gateway.api.recordIncomingPayment', function(){
     });
   });
 
-  it('should create a new address record for the recipient address given a destination tag', function(done){
+  it('should record the incoming payment in the ripple_transactions database table', function(done){
     gateway.api.recordIncomingPayment(successfullPayment, function(error, response){
       assert.strictEqual(response.dataValues.to_amount, successfullPayment.amount);
       assert.strictEqual(response.dataValues.to_issuer, gateway.config.get('COLD_WALLET'));
