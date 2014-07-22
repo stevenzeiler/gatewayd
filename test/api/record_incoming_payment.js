@@ -51,7 +51,7 @@ describe('gateway.api.recordIncomingPayment', function(){
     });
   });
 
-  it('should prevents the recording of incoming payments with redundant transaction hashes', function(done){
+  it('should prevent the recording of incoming payments with redundant transaction hashes', function(done){
     var payment = {
          destinationTag: '1',
          transaction_state: 'tesSUCCESS',
