@@ -39,11 +39,12 @@ describe('gateway.api.recordIncomingPayment', function(){
       };
       done();
     });
+
   });
 
   it('should record the incoming payment in the ripple_transactions database table', function(done){
     gateway.api.recordIncomingPayment(payment, function(error, response){
-      dbResponse = response.dataValues;
+      recordedPayment = response.dataValues;
       assert.strictEqual(response.dataValues.to_amount, payment.amount);
       assert.strictEqual(response.dataValues.to_issuer, gateway.config.get('COLD_WALLET'));
       assert.strictEqual(response.dataValues.to_currency, payment.currency);
@@ -62,7 +63,7 @@ describe('gateway.api.recordIncomingPayment', function(){
   });
 
   after(function(done){
-    gateway.data.rippleTransactions.delete({ id: dbResponse.id }, done);
+    gateway.data.rippleTransactions.delete({ id: recordedPayment.id }, done);
   });
 
 });
