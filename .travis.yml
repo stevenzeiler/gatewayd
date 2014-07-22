@@ -14,6 +14,8 @@ before_script:
   - cd lib/data/ && db-migrate up
 env:
   - DATABASE_URL=postgres://postgres:@localhost:5432/ripple_gateway_test KEY=123456789
+  global:
+      secure: sfHArSqDThYVaqaIY+0YxV5UbW5wXyD2C6K2TjkxohMT8cXdyZ5wmsTpTWt1GrOysEM44rV/w+k7Jv+1uPLw5FztLeMKSARZSLtiy7e/bbgQmdJkk1XlrqfOtiI1ijYBotyJl7lxH0VU+MCYnjGTm7vBWquJCyAgSvDEH7ehz0A=
 notifications:
   email:
     false
