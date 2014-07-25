@@ -38,6 +38,7 @@ describe('Incoming payment', function(){
 
   it('should queue incoming payment', function(done){
     incomingPayment.queue(function(error, queuedPayment){
+      incomingQueue = queuedPayment;
       assert.strictEqual(queuedPayment.dataValues.to_amount, paymentObject.payment.source_amount.value);
       assert.strictEqual(queuedPayment.dataValues.to_currency, paymentObject.payment.source_amount.currency);
       assert.strictEqual(queuedPayment.dataValues.transaction_state, 'tesSUCCESS');
@@ -55,5 +56,9 @@ describe('Incoming payment', function(){
       done();
     });
 
+  });
+
+  after(function(done){
+    incomingQueue.destroy().complete(done);
   });
 });
