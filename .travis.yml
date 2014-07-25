@@ -15,7 +15,7 @@ before_script:
 env:
   - DATABASE_URL=postgres://postgres:@localhost:5432/ripple_gateway_test KEY=123456789
   global:
-      secure: sfHArSqDThYVaqaIY+0YxV5UbW5wXyD2C6K2TjkxohMT8cXdyZ5wmsTpTWt1GrOysEM44rV/w+k7Jv+1uPLw5FztLeMKSARZSLtiy7e/bbgQmdJkk1XlrqfOtiI1ijYBotyJl7lxH0VU+MCYnjGTm7vBWquJCyAgSvDEH7ehz0A=
+      secure: AAAAB3NzaC1yc2EAAAADAQABAAAAgQDF0u5UP+jNS0a/d5E42PIeenTklGc5QjPYIBSfqixQJAlgjlVGtXmoAvuCr0ygWY85R7/gsIdm8gojPDBfrMRE4CMq6jX3jYpASboIc1o8+ZkQ0uBnBRSXpO6KES/M7+/CQNr/4wZrcLkGTJl7/uuV5BBsdgV5L7pL3JJnaZ6tTQ==
 notifications:
   email:
     false
