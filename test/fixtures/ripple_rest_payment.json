@@ -1,0 +1,50 @@
+{
+  "client_resource_id": "",
+  "payment": {
+    "source_account": "rsKFYMCrvW5ufUFwh6sH3DPuKhkFePLuyg",
+    "source_tag": "9933",
+    "source_amount": {
+      "currency": "DOG",
+      "issuer": "rMpPEZcKYjYyfTyesrYWi5VV6wcy5mTxP1",
+      "value": "1.759"
+    },
+    "source_slippage": "0",
+    "destination_account": "r4EwBWxrx5HxYRyisfGzMto3AT8FZiYdWk",
+    "destination_tag": "558",
+    "destination_amount": {
+      "currency": "DOG",
+      "issuer": "rsKFYMCrvW5ufUFwh6sH3DPuKhkFePLuyg",
+      "value": "1.759"
+    },
+    "invoice_id": "",
+    "paths": "[[{\"account\":\"rMpPEZcKYjYyfTyesrYWi5VV6wcy5mTxP1\",\"type\":1,\"type_hex\":\"0000000000000001\"}]]",
+    "no_direct_ripple": false,
+    "partial_payment": false,
+    "direction": "incoming",
+    "state": "validated",
+    "result": "tesSUCCESS",
+    "ledger": "7991040",
+    "hash": "F5B8BF7EC1BA385D0544FDD01D3CDE1D0840D2B634DD07BB5AD1C827E6628CF4",
+    "timestamp": "2014-07-27T22:42:50.000Z",
+    "fee": "0.000012",
+    "source_balance_changes": [
+      {
+        "value": "-0.000012",
+        "currency": "XRP",
+        "issuer": ""
+      },
+      {
+        "value": "-1.759",
+        "currency": "DOG",
+        "issuer": "rMpPEZcKYjYyfTyesrYWi5VV6wcy5mTxP1"
+      }
+    ],
+    "destination_balance_changes": [
+      {
+        "value": "1.759",
+        "currency": "DOG",
+        "issuer": "rMpPEZcKYjYyfTyesrYWi5VV6wcy5mTxP1"
+      }
+    ]
+  }
+}
