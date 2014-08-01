@@ -9,6 +9,7 @@ var worker = new SqlMqWorker({
     status: 'queued'
   }},
   job: function(deposit, callback) {
+    logger.info('deposits:queued:popped', deposit.toJSON());
     var depositProcessor = new DepositProcessor(deposit);
     depositProcessor.processDeposit(callback);
   }
