@@ -40,7 +40,7 @@
     "underscore-node": "0.1.2",
     "sequelize": "^1.7.0",
     "sinon": "^1.9.1",
-    "sql-mq-worker": "^1.0.1",
+    "sql-mq-worker": "^1.0.3",
     "supertest": "^0.13.0",
     "validator": "^3.11.0",
     "winston": "^0.7.3",
