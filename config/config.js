@@ -33,7 +33,8 @@ nconf.defaults({
   'WITHDRAWALS_CALLBACK_URL': null, // URL to POST callback of withdrawals
   'WITHDRAWALS_CALLBACK_CERTIFICATE': null, // Used to validate SSL on callbacks
   'DEPOSITS_CALLBACK_URL': null, // URL to POST callback of withdrawals
-  'DEPOSITS_CALLBACK_CERTIFICATE': null // Used to validate SSL on callbacks
+  'DEPOSITS_CALLBACK_CERTIFICATE': null, // Used to validate SSL on callbacks
+  'LOGGLY': false
 });
 
 module.exports = nconf;

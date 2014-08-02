@@ -44,7 +44,8 @@
     "supertest": "^0.13.0",
     "validator": "^3.11.0",
     "winston": "^0.7.3",
-    "superagent": "^0.18.0"
+    "superagent": "^0.18.0",
+    "winston-loggly": "^1.0.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "^0.10.0",
