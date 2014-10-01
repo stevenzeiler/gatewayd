@@ -23,18 +23,13 @@ describe('RippleAddress model', function() {
     it('should set the last payment hash', function(done) {
       rippleAddress.setLastPaymentHash(HASH)
       .then(function() {
-        console.log(rippleAddress.toJSON());
         assert.strictEqual(rippleAddress.data.lastPaymentHash, HASH);
         done();
       });
     });
 
-    it('should get the last payment hash', function(done) {
-      rippleAddress.getLastPaymentHash()
-      .then(function(hash) {
-        assert.strictEqual(hash, HASH); 
-        done();
-      });
+    it('should get the last payment hash', function() {
+      assert.strictEqual(rippleAddress.getLastPaymentHash(), HASH); 
     });
 
     after(function(done) {
