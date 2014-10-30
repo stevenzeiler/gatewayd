@@ -8,9 +8,8 @@ nconf
 
 nconf.defaults({
   'ENVIRONMENT': 'production',
-  'RIPPLE_REST_API': 'http://localhost:5990/',
+  'RIPPLE_REST_API': 'https://api.ripple.com/',
   'RIPPLE_REST_PATH': null,
-  'RUN_RIPPLE_REST': false,
   'DATABASE_USER': 'postgres',
   'DATABASE_PASSWORD': 'password',
   'DATABASE_NAME': 'ripple_gateway',
@@ -39,10 +38,6 @@ nconf.defaults({
   'CURRENCIES': null, // Required
   'WITHDRAWAL_FEE': 0.01, // Required - default 1%
   'DEPOSIT_FEE': 0.01, // Required - default 1%
-  'WITHDRAWALS_CALLBACK_URL': null, // URL to POST callback of withdrawals
-  'WITHDRAWALS_CALLBACK_CERTIFICATE': null, // Used to validate SSL on callbacks
-  'DEPOSITS_CALLBACK_URL': null, // URL to POST callback of withdrawals
-  'DEPOSITS_CALLBACK_CERTIFICATE': null, // Used to validate SSL on callbacks
   'LOGGLY': false
 });
 

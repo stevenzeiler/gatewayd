@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-var gateway = require('../');
+var gatewayd = require('../');
 var program = require('commander');
-const requireAll = require('require-all-to-camel');
-var cli = requireAll(__dirname+'/../lib/cli/');
+const requireAllToCamel = require('require-all-to-camel');
+const requireAll = require('require-all');
+var cli = requireAllToCamel(__dirname+'/../lib/cli/');
 var logger = require('winston');
 var promptly = require('promptly');
+var processes = requireAll(__dirname+'/../processes');
 
-process.env.DATABASE_URL = gateway.config.get('DATABASE_URL');
+process.env.DATABASE_URL = gatewayd.config.get('DATABASE_URL');
 
 program
   .version('1.1.0')
@@ -80,26 +82,25 @@ program
 
 program
   .command('start') 
-  .description('start the gateway processes')
+  .description('start the gatewayd processes')
   .action(cli.startGateway);
-
 program
   .command('stop') 
-  .description('stop the gateway processes')
+  .description('stop the gatewayd processes')
   .action(cli.stopGateway);
 
 program
   .command('restart') 
-  .description('restart the gateway processes')
+  .description('restart the gatewayd processes')
   .action(cli.restartGateway);
 
 program
   .command('set_postgres_url <url>')
   .description('set the url of the postgres database')
   .action(function(url){
-    gateway.config.set('DATABASE_URL', url);
-    gateway.config.save(function(){
-      logger.info(gateway.config.get('DATABASE_URL'));
+    gatewayd.config.set('DATABASE_URL', url);
+    gatewayd.config.save(function(){
+      logger.info(gatewayd.config.get('DATABASE_URL'));
     });
   });
 
@@ -107,17 +108,17 @@ program
   .command('get_postgres_url')
   .description('get the url of the postgres database')
   .action(function (){
-    logger.info(gateway.config.get('DATABASE_URL'));
+    logger.info(gatewayd.config.get('DATABASE_URL'));
   });
 
 program
   .command('set_ripple_rest_url <url>')
   .description('set the url of the ripple rest api')
   .action(function(url){
-    gateway.config.set('RIPPLE_REST_API', url);
-    gateway.config.save(function () {
+    gatewayd.config.set('RIPPLE_REST_API', url);
+    gatewayd.config.save(function () {
       logger.info('set the ripple rest api url');
-      logger.info(gateway.config.get('RIPPLE_REST_API'));
+      logger.info(gatewayd.config.get('RIPPLE_REST_API'));
     });
   });
 
@@ -125,24 +126,24 @@ program
   .command('get_ripple_rest_url')
   .description('get the url of the ripple rest api')
   .action(function (){
-    logger.info(gateway.config.get('RIPPLE_REST_API'));
+    logger.info(gatewayd.config.get('RIPPLE_REST_API'));
   });
 
 program
   .command('set_domain <DOMAIN>')
-  .description('set the DOMAIN name of the gateway')
+  .description('set the DOMAIN name of the gatewayd')
   .action(function(DOMAIN){
-    gateway.config.set('DOMAIN', DOMAIN);
-    gateway.config.save(function() {
-      logger.info(gateway.config.get('DOMAIN'));
+    gatewayd.config.set('DOMAIN', DOMAIN);
+    gatewayd.config.save(function() {
+      logger.info(gatewayd.config.get('DOMAIN'));
     });
   });
 
   program
     .command('get_domain')
-    .description('get the DOMAIN name of the gateway')
+    .description('get the DOMAIN name of the gatewayd')
     .action(function(){
-      logger.info(gateway.config.get('DOMAIN'));
+      logger.info(gatewayd.config.get('DOMAIN'));
     });
 
   program
@@ -152,53 +153,53 @@ program
 
   program
     .command('set_hot_wallet <address> <secret>')
-    .description('set the gateway hot wallet')
+    .description('set the gatewayd hot wallet')
     .action(cli.setHotWallet);
 
   program
     .command('get_hot_wallet')
-    .description('get the address of the gateway hot wallet')
+    .description('get the address of the gatewayd hot wallet')
     .action(function(){
       var key = 'HOT_WALLET';
-      var hot_wallet = gateway.config.get(key);
+      var hot_wallet = gatewayd.config.get(key);
       if (hot_wallet.address) {
         logger.info(hot_wallet.address);
       } else {
         logger.error('hot wallet not yet set');
-        logger.error('use bin/gateway set_hot_wallet <address> <secret>');
+        logger.error('use bin/gatewayd set_hot_wallet <address> <secret>');
       }
     });
 
   program
     .command('get_hot_wallet_secret')
-    .description('get the secret of the gateway hot wallet')
+    .description('get the secret of the gatewayd hot wallet')
     .action(function(){
       var key = 'HOT_WALLET';
-      var hot_wallet = gateway.config.get(key);
+      var hot_wallet = gatewayd.config.get(key);
       if (hot_wallet.secret) {
         logger.info(hot_wallet.secret);
       } else {
         logger.error('hot wallet not yet set');
-        logger.error('use bin/gateway set_hot_wallet <address> <secret>');
+        logger.error('use bin/gatewayd set_hot_wallet <address> <secret>');
       }
     });
 
 program
   .command('set_cold_wallet <address>')
-  .description('set the gateway cold wallet')
+  .description('set the gatewayd cold wallet')
   .action(cli.setColdWallet);
 
 program
   .command('get_cold_wallet')
-  .description('get the gateway cold wallet')
+  .description('get the gatewayd cold wallet')
   .action(function(){
     var key = 'COLD_WALLET';
-    var cold_wallet = gateway.config.get(key);
+    var cold_wallet = gatewayd.config.get(key);
     if (cold_wallet) {
       logger.info(cold_wallet);
     } else {
       logger.error('cold wallet not yet set');
-      logger.error('use bin/gateway set_cold_wallet <address>');
+      logger.error('use bin/gatewayd set_cold_wallet <address>');
     }
   });
 
@@ -214,7 +215,7 @@ program
 
 program
   .command('list_currencies')
-  .description('List all currencies supported by the gateway')
+  .description('List all currencies supported by the gatewayd')
   .action(cli.listCurrencies);
 
 program
@@ -254,17 +255,17 @@ program
 
 program
   .command('list_processes')
-  .description('list the processes currently run by ripple-gateway')
+  .description('list the processes currently run by ripple-gatewayd')
   .action(cli.listProcesses);
 
 program
   .command('activate_user')
-  .description('enable a user to use the ripple gateway')
+  .description('enable a user to use the ripple gatewayd')
   .action(cli.activateUser);
 
 program
   .command('deactivate_user <userId>')
-  .description('disable a user from using the ripple gateway')
+  .description('disable a user from using the ripple gatewayd')
   .action(cli.deactivateUser);
 
 program
@@ -286,6 +287,13 @@ program
   .command('enqueue_outgoing_payment <address> <amount> <currency>')
   .description('run the setup wizard using the current configuration')
   .action(cli.enqueueOutgoingPayment);
+
+program
+  .command('ps:start <name>')
+  .description('start a process in the /processes directory')
+  .action(function(name) {
+    processes[name](gatewayd);
+  });
 
 program.parse(process.argv);
 

@@ -1,23 +1,25 @@
-var gatewayd = require(__dirname + '/../');
 var https = require('https');
 var fs = require('fs');
-
 var app = require(__dirname+'/../lib/app.js');
 
-var ssl = (gatewayd.config.get('SSL') && (gatewayd.config.get('SSL') !== 'false'));
+module.exports = function(gatewayd) {
 
-if (ssl) {
-  app = https.createServer({
-    key: fs.readFileSync(gatewayd.config.get('SSL_KEY_PATH')),
-    cert: fs.readFileSync(gatewayd.config.get('SSL_CERTIFICATE_PATH'))
-  }, app);
+  var ssl = (gatewayd.config.get('SSL') && (gateway.config.get('SSL') !== 'false'));
+
+  if (ssl) {
+    app = https.createServer({
+      key: fs.readFileSync(gatewayd.config.get('SSL_KEY_PATH')),
+      cert: fs.readFileSync(gatewayd.config.get('SSL_CERTIFICATE_PATH'))
+    }, app);
+  }
+
+  var host = gatewayd.config.get('HOST');
+  var port = gatewayd.config.get('PORT');
+  var protocol = ssl ? 'https' : 'http';
+
+  app.listen(port, host);
+
+  gatewayd.logger.info('Serving REST API and Angular WebApp at', protocol+'://'+host+':'+port);
+
 }
-
-var host = gatewayd.config.get('HOST');
-var port = gatewayd.config.get('PORT');
-var protocol = ssl ? 'https' : 'http';
-
-app.listen(port, host);
-
-gatewayd.logger.info('Serving REST API and Angular WebApp at', protocol, '://', host, ':', port);
 
